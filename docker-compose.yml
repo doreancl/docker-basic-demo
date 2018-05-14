@@ -1,0 +1,32 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=optPass
+    volumes:
+      - ./docker/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3307:3306
+  php:
+    build: .
+    volumes:
+      - .:/var/www/html/backend
+    #links:       - "mysql:mysql"
+    ports:
+      - "9000:9000"
+    expose:
+      - "9000"
+    links:
+      - mysql
+  web:
+    image: nginx:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html/backend
+      - ./docker/nginx:/etc/nginx/conf.d/
+    links:
+      - php:php
+    depends_on:
+      - php
