@@ -1,7 +1,7 @@
 server {
-    server_name dev.valorexperto.test;
+    server_name dev.test;
     listen 8000;
-    root /var/www/html/services/valorexperto/valor-experto-backend/web;
+    root /var/www/html/services/demoapp/backend/web;
 
     set $is_https off;
     if ($http_x_forwarded_proto ~ "https") {
